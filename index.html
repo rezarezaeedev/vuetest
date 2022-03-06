@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-bind:value="inputtext_message" v-on:input='inputtext_change_event($event)'>  <span>{{inputtext_message}}</span>
+        <p style="margin: 0;pad: 0;color: gray;">After change value apply changes</p>
+        <br><br><br>
+        <textarea cols="30" rows="6" @keyup='textarea_change_event'>{{ textarea_message }}</textarea>  <span>{{ textarea_message }}</span>
+        <p style="margin: 0;pad: 0;color: gray;">After keyup apply changes</p>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        const App = {
+            data:function data(){
+                return {
+                    inputtext_message:'Hello Reza',
+                    textarea_message:'Tell me something...!',
+                }
+            },
+            methods:{
+                inputtext_change_event(event){
+                    this.inputtext_message=event.target.value;
+                },
+                textarea_change_event:function(e){
+                    this.textarea_message=e.target.value;
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app')
+    </script>
+</body>
+</html>

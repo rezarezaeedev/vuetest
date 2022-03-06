@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>data-methods-vbind-von-modifiers-listeners-</title>
+</head>
+<body>
+    <div id="app">
+        <h1>data ,methods ,vbind ,von ,modifiers ,listeners</h1>
+        <h2>{{title}}</h2>
+        <input type="number" id="numberinput" value="1"><br><br>
+        <span v-on:mouseenter="increase_mouseenter_counter">Hover me: {{count_mouseenter}}</span><br><br>
+        <span>{{ getUsernameText() }}</span><br><br>
+        <a v-bind:href="weburl" v-on:click.prevent.right="goto_website('https://google.com')" @click.prevent.left="increase_link_counter(10, $event)">Go to google: {{count_link}}</a><br>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        let numberinput;
+        let step;
+        const App = {
+            data(){
+                return {
+                    username:'reza',
+                    title:'First web page',
+                    weburl:'https://google.com',
+                    count_mouseenter:0,
+                    count_link:0,
+
+                }
+            },
+            methods: {
+                getUsernameText(){
+                    return `Your Username is ${this.username}`;
+                },
+
+                increase_mouseenter_counter(event){
+                    numberinput=document.querySelector('#numberinput');
+                    step = parseInt(numberinput.value);
+                    console.log(step)
+                    this.count_mouseenter+=step;
+                },
+
+                increase_link_counter(step, event){
+                    this.count_link+=step;
+                },
+
+                goto_website(url){
+                    window.location.href=url;
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app')
+    </script>
+</body>
+</html>

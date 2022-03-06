@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My first page</title>
+</head>
+<body>
+    <!-- <script src="scripttest.js"></script> -->
+    <div id="app">
+        <h1>Weclome to my page</h1>
+        <h2>{{ username }}</h2>
+        <a id="mylink" v-bind:href="get_telegram_link()" v-on:click.prevent.left="left_click" @click.prevent.right="right_click">{{ get_telegram_text()}} Telegram: {{count}}</a>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        const App = {
+            data(){
+                return {
+                    username:'rezarezaeedev',
+                    gmail:'rezarezaee.commercial',
+                    count:0
+                }
+            },
+            methods:{
+                get_username_text(){
+                    return '@' + this.username;
+                },
+
+                get_telegram_text(){
+                    return this.username ;
+                },
+
+                get_telegram_link(){
+                    // return 'https://'+ this.get_telegram_link();
+                    return 'https://t.me/'+  this.get_telegram_text();
+                },
+
+                left_click(){
+                    this.count+=1
+                },
+
+                right_click:()=>{
+                    let mylink=document.querySelector('#mylink');
+                    window.location.href=mylink.href;
+                },
+            }
+        }
+        Vue.createApp(App).mount('#app');
+    </script>
+</body>
+</html>
