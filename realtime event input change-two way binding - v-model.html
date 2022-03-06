@@ -7,13 +7,28 @@
     <title>Document</title>
 </head>
 <body>
+    
     <div id="app">
         <input type="text" v-bind:value="inputtext_message" v-on:input='inputtext_change_event($event)'>  <span>{{inputtext_message}}</span>
         <p style="margin: 0;pad: 0;color: gray;">After change value apply changes</p>
         <br><br><br>
+
+        <input type="password" v-model="password" placeholder="Enter your password">  <span>{{ password }}</span>
+        <p style="margin: 0;pad: 0;color: gray;">Realtime password shower</p>
+        <br><br><br>
+
         <textarea cols="30" rows="6" @keyup='textarea_change_event'>{{ textarea_message }}</textarea>  <span>{{ textarea_message }}</span>
         <p style="margin: 0;pad: 0;color: gray;">After keyup apply changes</p>
+        <br><br><br>
+
+        <textarea cols="30" rows="6" v-model="htmltag">{{ htmltag }}</textarea>  <span v-text="htmltagtext"></span> 
+        <div v-html="htmltag">
+            {{ htmltag }}
+        </div>
+        <p style="margin: 0;pad: 0;color: gray;">After changing html tag, apply the changes</p>
+
     </div>
+
     <script src="https://unpkg.com/vue@3"></script>
     <script>
         const App = {
@@ -21,6 +36,9 @@
                 return {
                     inputtext_message:'Hello Reza',
                     textarea_message:'Tell me something...!',
+                    password:'',
+                    htmltag:'<h2>I am an html tag</h2>',
+                    htmltagtext:'Write any tag into input and oblivise under it'
                 }
             },
             methods:{
