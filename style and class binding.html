@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            user-select: none;
+            padding: 0;
+        }
+        .text-tomato{
+            background-color: tomato;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 v-bind:style="{ color: login_flag ? 'red' : 'green' , backgroundColor:'silver' }"  v-on:click="login_flag=!login_flag">Hello Reza - click me</h1>
+        <br><br>
+        <h1 :style='[styleObject1, styleObject2]' v-on:click="login_flag=!login_flag">Hello Reza (2) - click me</h1>
+        <br><br><br><br>
+        <div style="border: 2px black solid;">
+            <h1 :class="login_flag ? '' : 'text-tomato' "  v-on:click="login_flag=!login_flag">Hello Reza (3) - click me</h1>
+            <h1 :class="{'text-tomato' : login_flag }" v-on:click="login_flag=!login_flag">Hello Reza (3) - click me</h1>
+        </div>
+        <br><br><br><br>
+        <h1 :style="login_flag ? my_styles1 : my_styles2() " v-on:click="login_flag=!login_flag">Hello Reza (3) - click me</h1>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        const App = {
+            data:function(){
+                return {
+                    login_flag:false,
+                    styleObject1:{
+                        color: this.login_flag ?  'magenta' : 'brown', 
+                        backgroundColor:'silver',
+                    },
+
+                    styleObject2:{
+                        border: 'aqua 7px solid',
+                    }
+                }
+            },
+
+            computed:{
+                my_styles1:function(){
+                    return {
+                        'color':'crimson',
+                        backgroundColor:'silver'
+                    }
+                }
+            },
+
+            methods:{
+                my_styles2:function(){
+                    return {
+                        'color':'yellow',
+                        backgroundColor:'silver'
+
+                    }
+                }
+            },
+        }
+        Vue.createApp(App).mount('#app')
+    </script>
+</body>
+</html>

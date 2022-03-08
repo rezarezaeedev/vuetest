@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #passwrong,#passwrong2{
+            font-size: 1.6em;
+            color: red;
+            font-family: fantasy;
+            visibility: hidden;
+        }
+        .active{
+            visibility: visible !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" placeholder="Name" v-model="name">
+        <input type="text" placeholder="Last name" v-model="last_name">
+        <p>Fullname: <span  >{{fullname}}</span></p>
+
+        <br><br><br>
+        <h2>First form, by input event listening:</h2>
+        <form v-on:submit.prevent="submit_logger">
+            <input type="text" name="username" v-on:input="input_changer_value($event)"> <label>username</label><br>
+            <input type="email" name="email" v-on:input="input_changer_value($event)"> <label>email</label><br>
+            <input type="password" name="password" v-on:input="input_changer_value($event)"> <label>password</label><br>
+            <Button type="submit">Submit</Button>
+        </form>
+        <span id="passwrong" >طول پسورد باید حداقل ۸ کاراکتر باشد</span>
+        <br><br><br><br><br>
+        
+        <h2>Second form, by two way binding input values(v-model):</h2>
+        <form @submit.prevent="submit_logger_for_second_form">
+            <input type="text" v-model="twoway_binding_username"> <label>username</label><br>
+            <input type="email" v-model="twoway_binding_email"> <label>email</label><br>
+            <input type="password" v-model="twoway_binding_password"> <label>password</label><br>
+            <Button type="submit">Submit (2)</Button>
+        </form>
+        <span id="passwrong2" v-bind:class="{'active': passcheck }">طول پسورد باید حداقل ۸ کاراکتر باشد</span>
+
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        const App = {
+            data:function(){
+                return {
+                    name:'',
+                    last_name:'',
+                    username:'',
+                    password:'',
+                    email:'',
+
+                    twoway_binding_username:'',
+                    twoway_binding_password:'',
+                    twoway_binding_email:'',
+                }
+            },
+
+            watch:{
+                password:function(newdata, olddata){
+                    console.log(newdata,olddata)
+                },
+                name:function(newdata, olddata){
+                    let pattern = /\s[a-z]/i;
+                    if(newdata.match(pattern)){
+                        this.fullname = newdata;
+                    }
+                }
+            },
+
+            computed:{
+                fullname:{
+                    get:function(){
+                        return `${this.name}  ${this.last_name}`
+                    },
+                    set:function(value){
+                        let [name, lname] = value.split(' ');
+                        this.name = name;
+                        this.last_name = lname;
+                    }
+                },
+                passcheck(){
+                    if (this.twoway_binding_password.length<8 && this.twoway_binding_password.length!=0)
+                        return true 
+                    return false
+                }
+            },
+
+            methods:{
+                submit_logger:function(){
+                    let passwrong=document.querySelector('#passwrong');
+                    if(this.password.length<8){
+                        passwrong.classList.add('active');
+                    }else{
+                        passwrong.classList.remove('active');
+                        console.log(`Hello @${this.username} -${this.email} --> ${this.password}`)
+                    }
+                },
+
+                input_changer_value:function(e){
+                    // let target = e.target;
+                    // switch(target.name){
+                    //     case 'username':
+                    //         this.username = target.value; break;
+                    //     case 'email':
+                    //         this.email = target.value;break;
+                    //     case 'password': 
+                    //         this.password = target.value;break;
+                    // }
+                    this[e.target.name] = e.target.value;
+                },
+
+                submit_logger_for_second_form:function(){
+                    console.log(`Hello (2) @${this.twoway_binding_username} -${this.twoway_binding_password} --> ${this.twoway_binding_email}`)
+                },
+                
+            }
+        }
+
+        Vue.createApp(App).mount('#app')
+    </script>
+</body>
+</html>
