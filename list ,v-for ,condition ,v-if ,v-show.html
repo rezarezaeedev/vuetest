@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lists & Cards</title>
+    <style>
+        html{
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .active{
+            color: green ;
+            text-shadow: 0 0 5px;
+            margin: 2px 4px;
+        }
+        .name{
+            text-transform: capitalize;
+        }
+        .mono{
+            font-family: monospace;
+        }
+        .boldred{
+            font-weight: 900;
+            color: tomato;
+            padding: 2px 2px;
+        }
+        .card{
+            
+            border-radius: 10px;
+            width: 400px;
+            height: 140px;
+            margin: 17px 5px;
+            padding: 6px 20px;
+            box-sizing: border-box;
+        }
+        .account{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            align-content: center;
+            justify-content: flex-end;
+            margin-top: 10px;
+            font-size: 12px;
+            text-transform: lowercase;
+        }
+        .account:hover{
+            text-shadow: 0 0 30px gray;
+            font-size: 12.5px;
+            text-transform: capitalize;
+            color: purple;
+
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main layout -->
+    <div id="app">
+        <div style="float: right;border: 6px dotted blueviolet;height: 200px;margin: 10px;padding: 4px;">
+            <Button style="padding: 5px;" @click="flag=!flag">Difference between <span class="boldred">v-if</span> and <span class="boldred">v-show</span></Button>
+            <p v-if="flag">Hello reza-if</p>
+            <p v-show="flag">Hello reza-show</p>
+        </div>
+
+        <div style="float: right;clear: right;margin: 50px;">
+            <span>
+                We write one to twenty: <span v-for="num in 20" v-text="num + ' ,'"> </span>
+            </span>
+    
+            <br><hr><hr>
+            <span v-for="(value, key, index) in {name:'reza', family:'rezaee',age:'22'}">
+                <span>{{key}} : <span class="boldred name">"{{value}}"</span> from {{index}}th index</span>
+            </span>
+        </div>
+        
+        <div class="card" v-for="user in user_list" v-bind:style="get_color_object()">
+            <span class="account">
+                <span v-if="user.account===0">Admin</span>
+                <span v-else-if="user.account==1">Normal</span>
+                <span v-else>Premiuem</span> 
+            </span>
+            <h4 style="display: inline;">Fullname: <span class="boldred name">{{ getfullname(user) }} </span> <span class="mono"> ,Age: {{ user.age }} </span></h4> 
+            <h5>Email: <span class="mono">{{ user.email }}</span></h5>
+            <button v-on:click="delete_item(user.id)">Delete</button>
+            <button v-on:click="user.is_active=!user.is_active">Toggle activate</button>
+            <span v-show="user.is_active" class="active"> Is active</span>
+        </div>
+        
+    </div>
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <script> 
+        var get_random = length =>  Math.floor(Math.random() * length);
+        const app = {
+            data:function(){
+                return {
+                    flag:0,
+                    user_list:[
+                        {
+                            id:3451,
+                            name:'reza',
+                            last_name:'rezaee',
+                            age:22,
+                            email:'rezarezaee.commercial@gmail.com',
+                            account:0,  // 0:Admin, 1:NormalUser, 2:PremiumUser
+                            is_active:false,
+                        },
+                        {
+                            id:3452,
+                            name:'Ali',
+                            last_name:'Yousefi',
+                            age:23,
+                            email:'alijosefi77@gmail.com',
+                            account:1,
+                            is_active:true,
+                        },
+                        {
+                            id:3453,
+                            name:'Alireza',
+                            last_name:'Farokhpour',
+                            age:21,
+                            email:'alirezafr79@gmail.com',
+                            account:1,
+                            is_active:true,
+                        },
+                        {
+                            id:3454,
+                            name:'Aref',
+                            last_name:'packnahad',
+                            age:21,
+                            email:'arefpak79@gmail.com',
+                            account:1,
+                            is_active:true,
+                        },
+                        {
+                            id:3455,
+                            name:'Fateme',
+                            last_name:'Namjoo',
+                            age:21,
+                            email:'fatiimn757@gmail.com',
+                            account:2,
+                            is_active:false,
+                        },
+                    ],
+
+                    color_list:[
+                        'red',
+                        'tomato',
+                        'green',
+                        'black',
+                        'cyan',
+                        'purple',
+                        'chartreuse',
+                        'chocolate',
+                        'blue',
+                        'seagreen',
+                        'brown',
+                        'orange'
+                    ]
+                }
+            },
+
+            watch:{
+
+            },
+            
+            computed:{
+                
+            },
+
+            methods:{
+                get_color_object(){
+                    return {'box-shadow': '0px 0px 20px ' + this.get_random_color()}
+                },
+                getfullname:user=>`${user.name} ${user.last_name}`,
+                get_random_color(){
+                    return this.color_list[get_random(this.color_list.length)]
+                },
+                delete_item(id){
+                    this.user_list = this.user_list.filter(user=>user.id!=id)
+                },
+            },
+        }
+        Vue.createApp(app).mount('#app')
+    </script> 
+</body>
+</html>
