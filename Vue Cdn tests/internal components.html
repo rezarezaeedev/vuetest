@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <my-first-component>ffffffff</my-first-component>
+        
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        const App = {
+            data(){
+                return {
+
+                }
+            }
+        }
+        const app = Vue.createApp(App)
+
+        app.component('my-first-component',
+            {
+                data(){
+                    return{
+                        count:0.5
+                    }
+                },
+
+                methods:{
+
+                },
+
+                template:`
+                <h2>This is first component</h2>
+                <div @click='count++'>Click my to increasement: {{count}}</div>
+                `
+            },
+        )
+
+        app.mount('#app')
+
+    </script>
+</body>
+</html>
