@@ -81,7 +81,7 @@ export default{
           let obj = {
             id:this.id_evaluator(),
             text:text,
-            status:0,
+            status:false,
           }
           this.items.push(obj)
         }

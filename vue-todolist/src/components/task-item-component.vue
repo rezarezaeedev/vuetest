@@ -16,7 +16,7 @@ export default{
         },
 
         toggleStatus(){
-            return this.data.status == 1 ? 0 : 1
+            return this.data.status == true ? false : true
         },
         
         deleteTaskItem(){
@@ -28,13 +28,13 @@ export default{
 
 
 <template>
-    <div class="mt-2 mb-3 py-2 px-2 border rounded d-flex justify-content-between " :class='{"active_item":data.flag}' :id="'mytaskitem'+data.id" >
+    <div class="mt-2 mb-3 py-2 px-2 border rounded d-flex justify-content-between " :class='{"active_item":data.flag}' :key="'mytaskitem'+data.id" >
         <!--Task item-->
         <div class="d-flex align-items-center">
             
             <label>
                 <input class="mycheckbox" type="checkbox" :key="'mychekbox'+data.id" v-bind:checked='data.status' @click='sendDataForUpdate'>
-                <span class="mx-3" >{{data.text}} - {{data.id}} -- {{data.status}}</span>
+                <span class="mx-3" v-text="data.text"></span>
             </label>
         </div>
         <div class="d-flex">
