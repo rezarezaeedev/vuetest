@@ -1,11 +1,11 @@
 <script>
 import TaskItemComponent  from "./components/task-item-component.vue";
-import axios from 'axios';
+import todosApi from './apis/todosapi';
 export default{
   data(){
     return{
       currentTab:'todo',
-      url:'https://test4vue-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
+      url:'/todos.json',
       text_input:'',
       items:[
         
@@ -14,16 +14,7 @@ export default{
   },
 
   created(){
-   axios.get(this.url)
-     .then(res=>{
-       Object.entries(res.data).forEach(value=>{
-          this.items.push({
-            id:value[0],
-            ...value[1]
-          })
-       })
-     })
-     .catch(err=>console.log(err))
+	  this.getAllData()
  },
 
   computed:{
@@ -31,6 +22,20 @@ export default{
  },
 
   methods:{
+	  getAllData(){
+		  let list =[]
+			todosApi.get(this.url)
+				.then(res=>{
+					Object.entries(res.data).forEach(value=>{
+						list.push({
+							id:value[0],
+							...value[1]
+						})
+					})
+					this.items = list
+				})
+				.catch(err=>console.log(err))
+	  },
     item_list_filtered:function(value){
         return this.items.filter(function(item){
           if (item.status === value)
@@ -69,25 +74,17 @@ export default{
             status:false,
           }
           
-          axios.post(this.url, obj)
-            .then(res=>{
-              this.items.push({
-                ...obj,
-                id:res.data.name,
-              })
-            })
+          todosApi.post(this.url, obj)
+            .then(res=>this.getAllData())
             this.text_input = ''
 
         }
       },
     
       updateTaskItem(newstatus, itemid){   
-          let x = this.items.find(function(element){
-              if (element.id == itemid){
-                return element
-              }
-          })
-        x.status= newstatus;
+		  todosApi.patch(`/todos/${itemid}.json`, {status:newstatus})
+          .then(res=>this.getAllData())
+          .catch(err=>console.log(err))
     
 
       },
@@ -100,8 +97,8 @@ export default{
                 return element
               }
           })
-        axios.delete(`https://test4vue-default-rtdb.europe-west1.firebasedatabase.app/todos/${itemid}.json`)
-          .then(res=>this.items.splice(i,1))
+        todosApi.delete(`/todos/${itemid}.json`)
+          .then(res=>this.getAllData())
           .catch(err=>console.log(err))
         
          

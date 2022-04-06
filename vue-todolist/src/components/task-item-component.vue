@@ -38,8 +38,7 @@ export default{
             </label>
         </div>
         <div class="d-flex">
-            <button class="rounded bg-danger text-light" type="submit" @click="deleteTaskItem">Delete</button>
-            <!-- <button class="mx-3 rounded bg-primary text-light" type="submit">Edit</button> -->
+            <button class="btn btn-danger rounded text-light" type="submit" @click="deleteTaskItem">Delete</button>
         </div>
     </div>    
 </template>
