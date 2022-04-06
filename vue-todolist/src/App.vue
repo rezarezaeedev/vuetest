@@ -1,44 +1,30 @@
 <script>
 import TaskItemComponent  from "./components/task-item-component.vue";
+import axios from 'axios';
 export default{
-  data:function(){
+  data(){
     return{
       currentTab:'todo',
+      url:'https://test4vue-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
       text_input:'',
       items:[
-        {
-          id:1,
-          text:'Zehn',
-          status:true,
-        },
-        {
-          id:2,
-          text:'Sokhan varan',
-          status:true,
-        },
-        {
-          id:3,
-          text:'Vue.Js',
-          status:false,
-        },
-        {
-          id:4,
-          text:'Book- 80/20 principle',
-          status:true,
-        },
-        {
-          id:5,
-          text:'React.Js',
-          status:false,
-        },
-        {
-          id:6,
-          text:'Bootstrap/tailwind',
-          status:false,
-        },
+        
       ]
     }
   },
+
+  created(){
+   axios.get(this.url)
+     .then(res=>{
+       Object.entries(res.data).forEach(value=>{
+          this.items.push({
+            id:value[0],
+            ...value[1]
+          })
+       })
+     })
+     .catch(err=>console.log(err))
+ },
 
   computed:{
     
@@ -79,11 +65,19 @@ export default{
         let text = this.text_input;
         if (text.length>0){
           let obj = {
-            id:this.id_evaluator(),
             text:text,
             status:false,
           }
-          this.items.push(obj)
+          
+          axios.post(this.url, obj)
+            .then(res=>{
+              this.items.push({
+                ...obj,
+                id:res.data.name,
+              })
+            })
+            this.text_input = ''
+
         }
       },
     
@@ -106,7 +100,10 @@ export default{
                 return element
               }
           })
-        this.items.splice(i,1)
+        axios.delete(`https://test4vue-default-rtdb.europe-west1.firebasedatabase.app/todos/${itemid}.json`)
+          .then(res=>this.items.splice(i,1))
+          .catch(err=>console.log(err))
+        
          
       }
  },
