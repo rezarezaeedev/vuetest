@@ -113,8 +113,8 @@ export default{
 </script>
 
 
-<template>
-  <div class="container mt-3 col-6 justify-content-around border rounded">
+<template> 
+  <div class="container my-5 col-6 justify-content-around border rounded">
     <div class="row ">
       <span class="fs-2 my-3 text-center">Reza Todo List</span>
       <div class="row">
@@ -140,7 +140,7 @@ export default{
         <task-item v-for="item in item_list(currentTab)"  :data="item" @update-task-item="updateTaskItem" @delete-task-item="deleteTaskItem"></task-item>
       </div>
     </div>
-  </div>
+  </div><br>
 </template>
 
 
