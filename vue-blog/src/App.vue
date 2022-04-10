@@ -94,11 +94,6 @@ export default{
            console.log(this.posts)
        },
 
-        getPageUrl(n){
-            let url=this.url;
-            return `${url}?page=${n}`
-        },
-        
         updateCurrentPage(n){
             this.currentPageNumber=n;
             // window.location = this.getPageUrl(n)
