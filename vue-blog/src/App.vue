@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <!-- Pagination-->
-                    <paginator-component :currentPageNumber='currentPageNumber' :length='parseInt(getPaginatedPosts().length/1.5)' @update-current-page='updateCurrentPage' url='http://localhost:3000/blog'></paginator-component>
+                    <paginator-component :currentPageNumber='currentPageNumber' :length='parseInt(getPaginatedPosts().length/2)' @update-current-page='updateCurrentPage' url='settings.url'></paginator-component>
                 </div>
                 <div v-else class="text-primary fs-5 text-center mt-4">Is loading posts</div>
                 <!-- Side widgets-->
@@ -45,6 +45,7 @@ import postapi from './components/apis/postapis';
 
 export default{
     created(){
+        //first data loading  
         postapi.get(`/posts?_limit=${this.countdata}}`)
             .then((data)=>{
                 data = data.data
@@ -67,7 +68,6 @@ export default{
                 }
                 this.loaded=true
         }) 
-        
     },
 
     components:{
