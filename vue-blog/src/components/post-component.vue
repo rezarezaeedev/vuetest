@@ -15,7 +15,7 @@ export default {
             <div class="small text-muted">{{post.date}}</div>
             <h2 class="card-title h4">{{post.title}}</h2>
             <p class="card-text">{{post.body}}</p>
-            <a class="btn btn-primary" :href="post.url">Read more →</a>
+            <router-link class="btn btn-primary" :to="`/post/${post.id}`">Read more →</router-link>
         </div>
     </div>
 </template>

@@ -1,7 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router.js';
 
-createApp(App).mount('#app')
+const app = createApp(App)
 
 Array.range = function(a, b, step){
     var A = [];
@@ -23,3 +24,6 @@ Array.range = function(a, b, step){
     }
     return A;
 }
+
+app.use(router)
+app.mount('#app')
