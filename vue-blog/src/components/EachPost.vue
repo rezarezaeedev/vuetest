@@ -14,6 +14,7 @@ export default {
             .then(data=>{
                 let photos=data.data
                 this.post.image = photos.url
+                this.loaded=true
     
         }) 
     },
@@ -22,7 +23,8 @@ export default {
         return {
             post:{
                
-            }
+            },
+            loaded:false,
         }
     },
     methods:{
@@ -39,14 +41,15 @@ export default {
 
 <template>
     <div class="container">
-        <div class="card mb-4">
-        <a :href="post.image"><img class="card-img-top" :src="post.image" alt="..." style="width:410px; height:150px;object-fit:cover" ></a>
-        <div class="card-body">
-            <div class="small text-muted">{{post.date}}</div>
-            <h2 class="card-title h4">{{post.title}}</h2>
-            <p class="card-text">{{post.body}}</p>
+        <div class="card mb-4" v-if="loaded">
+            <a :href="post.image"><img class="card-img-top" :src="post.image" alt="..." style="width:410px; height:150px;object-fit:cover" ></a>
+            <div class="card-body">
+                <div class="small text-muted">{{post.date}}</div>
+                <h2 class="card-title h4">{{post.title}}</h2>
+                <p class="card-text">{{post.body}}</p>
+            </div>
         </div>
-    </div>
+        <div v-else class="text-primary fs-5 text-center my-4">Is Loading...</div>
     </div>
 
 </template>
