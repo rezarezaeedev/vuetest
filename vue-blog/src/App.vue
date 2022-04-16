@@ -7,6 +7,8 @@
         <router-view></router-view>
         <!-- Footer-->
         <footer-component :copyright_text='settings.copyright_text'></footer-component>
+        <link href="./css/styles.css" rel="stylesheet" />
+
 </template>
 
 <script>
